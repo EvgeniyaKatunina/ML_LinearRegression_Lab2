@@ -20,7 +20,8 @@ fun doGradientDescent(dataObjects: List<Main.DataObject>): Vector {
                 dataObjects.map { step * getGradientComponent(1.0, currentCoeffs, it) }.average()))
         counter++
         val error = (currentCoeffs - previousCoeffs).norm()
-        if (counter % 10 == 0) println("Current error is $error.")
+        //if (counter % 10 == 0) println("Current error is $error.")
+        println((mse(currentCoeffs)))
     } while (error >= epsilon)
     return currentCoeffs
 }
@@ -39,4 +40,13 @@ fun getGradientComponent(feature: Double, coeffs: Vector, dataObject: Main.DataO
                     coeffs[1] * dataObject.rooms +
                     coeffs[2] * 1.0 -
                     dataObject.price) * feature
+}
+
+/**
+ * Q(w0, w1, w2, X) = 1/l * sum by i from 1 to  l (w2 * x_i_area + w1 * x_i_rooms + w0 - y_i_price)^2
+ */
+fun mse(coeffs: Vector): Double {
+    return -1 * data.sumByDouble {
+        Math.pow(coeffs[0] * it.area + coeffs[1] * it.rooms + coeffs[2] * 1.0 - it.price, 2.0)
+    } / data.size
 }

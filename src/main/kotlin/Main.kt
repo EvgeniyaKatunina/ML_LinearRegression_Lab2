@@ -34,3 +34,11 @@ object GradientDescentLauncher {
     }
 
 }
+
+object GeneticAlgorithmLauncher {
+
+    @JvmStatic fun main(args: Array<String>) {
+        Main.printlnResult(getCoefficients())
+    }
+
+}
